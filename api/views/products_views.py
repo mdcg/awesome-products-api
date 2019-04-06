@@ -1,4 +1,6 @@
+from api.models import Product
 from api.serializers.products_serializers import ProductSerializer
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -35,3 +37,40 @@ class RegisterProductView(APIView):
         }
 
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ListProductsView(APIView):
+    def get(self, request, format=None):
+        products = Product.objects.all()
+        serialized_products = ProductSerializer(products, many=True)
+
+        response_data = {
+            'status': 'success',
+            'message': None,
+            'data': serialized_products.data
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+
+class ProductDetailsView(APIView):
+    def get(self, request, product_id):
+        try:
+            product = Product.objects.get(id=product_id)
+        except ObjectDoesNotExist:
+            response_data = {
+                'status': 'fail',
+                'message': 'Product not found.',
+                'data': None
+            }
+
+            return Response(response_data, status=status.HTTP_404_NOT_FOUND)
+
+        serialized_product = ProductSerializer(product)
+        response_data = {
+            'status': 'succcess',
+            'message': None,
+            'data': serialized_product.data
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
