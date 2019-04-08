@@ -26,15 +26,19 @@ class SignUpView(APIView):
 
             response_data = {
                 'status': 'success',
-                'message': 'Welcome!',
-                'data': {'token': token.key, 'user_id': user.id, 'basket_id': basket.id},
+                'data': {
+                    'user': {
+                        'id': user.id,
+                        'token': token.key,
+                        'basket_id': basket.id
+                    }
+                }
             }
 
             return Response(response_data, status=status.HTTP_201_CREATED)
 
         response_data = {
             'status': 'fail',
-            'message': 'Something went wrong!',
             'data': user_to_register.errors,
         }
 
@@ -49,10 +53,11 @@ class SignInView(APIView):
         if not username or not password:
             response_data = {
                 'status': 'fail',
-                'message': 'Enter the username and password',
-                'data': None,
+                'data': {
+                    'username': ['A username is required.'],
+                    'password': ['A password is required.']
+                }
             }
-
             return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
         user = authenticate(username=username, password=password)
@@ -62,15 +67,19 @@ class SignInView(APIView):
 
             response_data = {
                 'status': 'success',
-                'message': 'Welcome!',
-                'data': {'token': token.key, 'user_id': user.id, 'basket_id': user.basket.id},
+                'data': {
+                    'user': {
+                        'id': user.id,
+                        'token': token.key,
+                        'basket_id': user.basket.id
+                    }
+                },
             }
 
             return Response(response_data, status=status.HTTP_200_OK)
 
         response_data = {
             'status': 'fail',
-            'message': 'Username or password is invalid',
             'data': None,
         }
 

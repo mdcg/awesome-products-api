@@ -19,8 +19,9 @@ class UserProductsView(APIView):
 
         response_data = {
             'status': 'success',
-            'message': None,
-            'data': serialized_products.data
+            'data': {
+                'products': serialized_products.data
+            }
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
@@ -34,17 +35,19 @@ class UserProductsView(APIView):
             product.user = user
             product.save()
 
+            serialized_product = ProductSerializer(product)
+
             response_data = {
                 'status': 'success',
-                'message': 'Product successfully registered!',
-                'data': None,
+                'data': {
+                    'product': serialized_product.data
+                }
             }
 
             return Response(response_data, status=status.HTTP_201_CREATED)
 
         response_data = {
             'status': 'fail',
-            'message': 'Something went wrong!',
             'data': product_to_register.errors,
         }
 
@@ -61,18 +64,17 @@ class EditUserProductView(APIView):
         except ObjectDoesNotExist:
             response_data = {
                 'status': 'fail',
-                'message': 'Product not found.',
                 'data': None
             }
-
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
         serialized_product = ProductSerializer(product)
 
         response_data = {
             'status': 'success',
-            'message': None,
-            'data': serialized_product.data
+            'data': {
+                'product': serialized_product.data
+            }
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
@@ -83,29 +85,29 @@ class EditUserProductView(APIView):
         except ObjectDoesNotExist:
             response_data = {
                 'status': 'fail',
-                'message': 'Product not found.',
                 'data': None
             }
-
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
         product_to_update = ProductSerializer(
             product, data=request.data, partial=True)
 
         if product_to_update.is_valid():
-            product_to_update.save()
+            product = product_to_update.save()
+
+            serialized_product = ProductSerializer(product)
 
             response_data = {
                 'status': 'success',
-                'message': None,
-                'data': product_to_update.data
+                'data': {
+                    'product': serialized_product.data
+                }
             }
 
             return Response(response_data, status=status.HTTP_200_OK)
 
         response_data = {
             'status': 'fail',
-            'message': 'Something went wrong!',
             'data': product_to_update.errors,
         }
 
@@ -117,17 +119,14 @@ class EditUserProductView(APIView):
         except ObjectDoesNotExist:
             response_data = {
                 'status': 'fail',
-                'message': 'Product not found.',
                 'data': None
             }
-
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
         product.delete()
 
         response_data = {
             'status': 'success',
-            'message': 'Product successfully deleted.',
             'data': None
         }
 
@@ -141,8 +140,9 @@ class ListProductsView(APIView):
 
         response_data = {
             'status': 'success',
-            'message': None,
-            'data': serialized_products.data
+            'data': {
+                'products': serialized_products.data
+            }
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
@@ -155,18 +155,17 @@ class ProductDetailsView(APIView):
         except ObjectDoesNotExist:
             response_data = {
                 'status': 'fail',
-                'message': 'Product not found.',
                 'data': None
             }
-
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
         serialized_product = ProductSerializer(product)
 
         response_data = {
             'status': 'success',
-            'message': None,
-            'data': serialized_product.data
+            'data': {
+                'product': serialized_product.data
+            }
         }
 
         return Response(response_data, status=status.HTTP_200_OK)

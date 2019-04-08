@@ -30,6 +30,6 @@ urlpatterns = [
     #
     # Basket
     #
-    path('basket/', UserBasketView.as_view(), name='user-basket'),
+    path('basket', UserBasketView.as_view(), name='user-basket'),
     path('basket/product/<int:product_id>', UserBasketProductsView.as_view(), name='user-basket-products'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
