@@ -20,10 +20,9 @@ class UserProductsView(APIView):
         response_data = {
             'status': 'success',
             'data': {
-                'products': serialized_products.data
-            }
+                'products': serialized_products.data,
+            },
         }
-
         return Response(response_data, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
@@ -40,17 +39,15 @@ class UserProductsView(APIView):
             response_data = {
                 'status': 'success',
                 'data': {
-                    'product': serialized_product.data
-                }
+                    'product': serialized_product.data,
+                },
             }
-
             return Response(response_data, status=status.HTTP_201_CREATED)
 
         response_data = {
             'status': 'fail',
             'data': product_to_register.errors,
         }
-
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -64,7 +61,7 @@ class EditUserProductView(APIView):
         except ObjectDoesNotExist:
             response_data = {
                 'status': 'fail',
-                'data': None
+                'data': None,
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
@@ -73,10 +70,9 @@ class EditUserProductView(APIView):
         response_data = {
             'status': 'success',
             'data': {
-                'product': serialized_product.data
-            }
+                'product': serialized_product.data,
+            },
         }
-
         return Response(response_data, status=status.HTTP_200_OK)
 
     def put(self, request, product_id):
@@ -85,7 +81,7 @@ class EditUserProductView(APIView):
         except ObjectDoesNotExist:
             response_data = {
                 'status': 'fail',
-                'data': None
+                'data': None,
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
@@ -100,17 +96,15 @@ class EditUserProductView(APIView):
             response_data = {
                 'status': 'success',
                 'data': {
-                    'product': serialized_product.data
-                }
+                    'product': serialized_product.data,
+                },
             }
-
             return Response(response_data, status=status.HTTP_200_OK)
 
         response_data = {
             'status': 'fail',
             'data': product_to_update.errors,
         }
-
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, product_id):
@@ -119,7 +113,7 @@ class EditUserProductView(APIView):
         except ObjectDoesNotExist:
             response_data = {
                 'status': 'fail',
-                'data': None
+                'data': None,
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
@@ -127,9 +121,8 @@ class EditUserProductView(APIView):
 
         response_data = {
             'status': 'success',
-            'data': None
+            'data': None,
         }
-
         return Response(response_data, status=status.HTTP_200_OK)
 
 
@@ -141,10 +134,9 @@ class ListProductsView(APIView):
         response_data = {
             'status': 'success',
             'data': {
-                'products': serialized_products.data
-            }
+                'products': serialized_products.data,
+            },
         }
-
         return Response(response_data, status=status.HTTP_200_OK)
 
 
@@ -155,7 +147,7 @@ class ProductDetailsView(APIView):
         except ObjectDoesNotExist:
             response_data = {
                 'status': 'fail',
-                'data': None
+                'data': None,
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
@@ -164,8 +156,7 @@ class ProductDetailsView(APIView):
         response_data = {
             'status': 'success',
             'data': {
-                'product': serialized_product.data
-            }
+                'product': serialized_product.data,
+            },
         }
-
         return Response(response_data, status=status.HTTP_200_OK)

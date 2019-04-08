@@ -10,7 +10,13 @@ class Product(models.Model):
     photo = models.ImageField(upload_to='products')
     rating = models.FloatField(default=0)
 
+    def __str__(self):
+        return self.name
+
 
 class Basket(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product)
+
+    def __str__(self):
+        return f'{self.id} - {self.user.username}'

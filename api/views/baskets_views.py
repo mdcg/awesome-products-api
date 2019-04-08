@@ -20,10 +20,9 @@ class UserBasketView(APIView):
         response_data = {
             'status': 'success',
             'data': {
-                'basket': serialized_basket.data
-            }
+                'basket': serialized_basket.data,
+            },
         }
-
         return Response(response_data, status=status.HTTP_200_OK)
 
 
@@ -37,7 +36,7 @@ class UserBasketProductsView(APIView):
         except ObjectDoesNotExist:
             response_data = {
                 'status': 'fail',
-                'data': None
+                'data': None,
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
@@ -50,10 +49,9 @@ class UserBasketProductsView(APIView):
         response_data = {
             'status': 'success',
             'data': {
-                'basket': serialized_basket.data
-            }
+                'basket': serialized_basket.data,
+            },
         }
-
         return Response(response_data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, product_id, format=None):
@@ -62,7 +60,7 @@ class UserBasketProductsView(APIView):
         except ObjectDoesNotExist:
             response_data = {
                 'status': 'fail',
-                'data': None
+                'data': None,
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
@@ -75,8 +73,7 @@ class UserBasketProductsView(APIView):
         response_data = {
             'status': 'success',
             'data': {
-                'basket': serialized_basket.data
-            }
+                'basket': serialized_basket.data,
+            },
         }
-
         return Response(response_data, status=status.HTTP_200_OK)

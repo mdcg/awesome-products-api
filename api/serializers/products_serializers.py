@@ -11,5 +11,5 @@ class ProductSerializer(serializers.ModelSerializer):
             'price',
             'description',
             'photo',
-            'rating'
+            'rating',
         )

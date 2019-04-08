@@ -30,18 +30,16 @@ class SignUpView(APIView):
                     'user': {
                         'id': user.id,
                         'token': token.key,
-                        'basket_id': basket.id
-                    }
-                }
+                        'basket_id': basket.id,
+                    },
+                },
             }
-
             return Response(response_data, status=status.HTTP_201_CREATED)
 
         response_data = {
             'status': 'fail',
             'data': user_to_register.errors,
         }
-
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -55,8 +53,8 @@ class SignInView(APIView):
                 'status': 'fail',
                 'data': {
                     'username': ['A username is required.'],
-                    'password': ['A password is required.']
-                }
+                    'password': ['A password is required.'],
+                },
             }
             return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -71,16 +69,14 @@ class SignInView(APIView):
                     'user': {
                         'id': user.id,
                         'token': token.key,
-                        'basket_id': user.basket.id
-                    }
+                        'basket_id': user.basket.id,
+                    },
                 },
             }
-
             return Response(response_data, status=status.HTTP_200_OK)
 
         response_data = {
             'status': 'fail',
             'data': None,
         }
-
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
